@@ -21,5 +21,12 @@ public class Actuators extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     
+    public static void setBigActuator(double speed) {
+    	bigActuator.set(speed);
+    }
+    
+    public static void setSmallActuator(double speed) {
+    	smallActuator.set(speed);
+    }
 }
 
