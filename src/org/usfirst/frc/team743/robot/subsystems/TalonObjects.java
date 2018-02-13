@@ -11,10 +11,10 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class TalonObjects extends Subsystem {
 
-    private Talon topRightTalon = new Talon(RobotMap.topRightMotor);
-    private Talon topLeftTalon  = new Talon(RobotMap.topLeftMotor);
-    private Talon bottomRightTalon = new Talon(RobotMap.bottomRightMotor);
-    private Talon bottomLeftTalon = new Talon(RobotMap.bottomLeftMotor);
+    private static Talon topRightTalon = new Talon(RobotMap.topRightMotor);
+    private static Talon topLeftTalon  = new Talon(RobotMap.topLeftMotor);
+    private static Talon bottomRightTalon = new Talon(RobotMap.bottomRightMotor);
+    private static Talon bottomLeftTalon = new Talon(RobotMap.bottomLeftMotor);
     
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
@@ -26,53 +26,53 @@ public class TalonObjects extends Subsystem {
      * @param speed
      * has to be between -1.0  and 1.0 decimal
      */
-    public void setSpeed(double speed){
+    public static void setSpeed(double speed){
     	topRightTalon.set(speed);
     	topLeftTalon.set(speed);
     	bottomLeftTalon.set(speed);
     	bottomRightTalon.set(speed);
     }
     
-    public void setTopSpeed(double speed){
+    public static void setTopSpeed(double speed){
     	topRightTalon.set(speed);
     	topLeftTalon.set(speed);
     }
     
-    public void setBottomSpeed(double speed){
+    public static void setBottomSpeed(double speed){
     	topRightTalon.set(speed);
     	topLeftTalon.set(speed);
     }
     
-    public Talon getTopRightTalon() {
+    public static Talon getTopRightTalon() {
   		return topRightTalon;
   	}
 
-  	public void setTopRightTalon(Talon topRightTalon) {
-  		this.topRightTalon = topRightTalon;
+  	public static void setTopRightTalon(Talon topRightTalon) {
+  		TalonObjects.topRightTalon = topRightTalon;
   	}
 
-  	public Talon getTopLeftTalon() {
+  	public static Talon getTopLeftTalon() {
   		return topLeftTalon;
   	}
 
-  	public void setTopLeftTalon(Talon topLeftTalon) {
-  		this.topLeftTalon = topLeftTalon;
+  	public static void setTopLeftTalon(Talon topLeftTalon) {
+  		TalonObjects.topLeftTalon = topLeftTalon;
   	}
 
-  	public Talon getBottomRightTalon() {
+  	public static Talon getBottomRightTalon() {
   		return bottomRightTalon;
   	}
 
-  	public void setBottomRightTalon(Talon bottomRightTalon) {
-  		this.bottomRightTalon = bottomRightTalon;
+  	public static void setBottomRightTalon(Talon bottomRightTalon) {
+  		TalonObjects.bottomRightTalon = bottomRightTalon;
   	}
 
-  	public Talon getBottomLeftTalon() {
+  	public static Talon getBottomLeftTalon() {
   		return bottomLeftTalon;
   	}
 
-  	public void setBottomLeftTalon(Talon bottomLeftTalon) {
-  		this.bottomLeftTalon = bottomLeftTalon;
+  	public static void setBottomLeftTalon(Talon bottomLeftTalon) {
+  		TalonObjects.bottomLeftTalon = bottomLeftTalon;
   	}
 }
 

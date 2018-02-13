@@ -27,9 +27,8 @@ import org.usfirst.frc.team743.robot.subsystems.TalonObjects;
  */
 public class Robot extends TimedRobot {
 	
-	public static final TalonObjects talons = new TalonObjects();
-	public static final MecanumDrive mecanum = new MecanumDrive(talons.getTopLeftTalon(),
-	  talons.getBottomLeftTalon(), talons.getTopRightTalon(), talons.getBottomRightTalon());
+	public static final MecanumDrive mecanum = new MecanumDrive(TalonObjects.getTopLeftTalon(),
+	  TalonObjects.getBottomLeftTalon(), TalonObjects.getTopRightTalon(), TalonObjects.getBottomRightTalon());
 	public static OI m_oi;
 
 	Command m_autonomousCommand;
