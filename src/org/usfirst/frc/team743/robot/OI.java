@@ -43,20 +43,20 @@ public class OI {
 	//// joystick.
 	// You create one by telling it which joystick it's on and which button
 	// number it is.
-	XboxController stick = new 	XboxController(5);
+	XboxController Controller = new 	XboxController(5);
 	
-	Button buttonA = new JoystickButton(stick, A);
-	Button buttonB = new JoystickButton(stick, B);
-	Button buttonX = new JoystickButton(stick, X);
-	Button buttonY = new JoystickButton(stick, Y);
-	Button buttonSTART = new JoystickButton(stick, START);
-	Button buttonSELECT = new JoystickButton(stick, SELECT);
-	Button buttonLB = new JoystickButton(stick, LB);
-	Button buttonRB = new JoystickButton(stick, RB);
-	Button buttonLT = new JoystickButton(stick, LT);
-	Button buttonRT = new JoystickButton(stick, RT);
-	Button buttonStickLeft = new JoystickButton(stick, stickLeftButton);
-	Button buttonStickRight = new JoystickButton(stick, stickRightButton);
+	Button buttonA = new JoystickButton(Controller, A);
+	Button buttonB = new JoystickButton(Controller, B);
+	Button buttonX = new JoystickButton(Controller, X);
+	Button buttonY = new JoystickButton(Controller, Y);
+	Button buttonSTART = new JoystickButton(Controller, START);
+	Button buttonSELECT = new JoystickButton(Controller, SELECT);
+	Button buttonLB = new JoystickButton(Controller, LB);
+	Button buttonRB = new JoystickButton(Controller, RB);
+	Button buttonLT = new JoystickButton(Controller, LT);
+	Button buttonRT = new JoystickButton(Controller, RT);
+	Button buttonStickLeft = new JoystickButton(Controller, stickLeftButton);
+	Button buttonStickRight = new JoystickButton(Controller, stickRightButton);
 	
 	public OI(){
 		buttonA.whenPressed(new ExampleCommand());

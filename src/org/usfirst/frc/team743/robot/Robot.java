@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team743.robot.commands.ExampleCommand;
-import org.usfirst.frc.team743.robot.subsystems.TalonObjects;
+import org.usfirst.frc.team743.robot.subsystems.DriveSystem;
 
 
 /**
@@ -27,8 +27,8 @@ import org.usfirst.frc.team743.robot.subsystems.TalonObjects;
  */
 public class Robot extends TimedRobot {
 	
-	public static final MecanumDrive mecanum = new MecanumDrive(TalonObjects.getTopLeftTalon(),
-	  TalonObjects.getBottomLeftTalon(), TalonObjects.getTopRightTalon(), TalonObjects.getBottomRightTalon());
+	public static final MecanumDrive mecanum = new MecanumDrive(DriveSystem.topLeftTalon,
+	  DriveSystem.topRightTalon, DriveSystem.bottomRightTalon, DriveSystem.bottomLeftTalon);
 	public static OI m_oi;
 
 	Command m_autonomousCommand;
@@ -121,8 +121,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		mecanum.driveCartesian(m_oi.stick.getX(Hand.kLeft)/255,
-		  m_oi.stick.getY(Hand.kLeft)/255, m_oi.stick.getX(Hand.kRight)/255);
+		mecanum.driveCartesian(m_oi.Controller.getX(Hand.kLeft)/255,
+		  m_oi.Controller.getY(Hand.kLeft)/255, m_oi.Controller.getX(Hand.kRight)/255);
 	}
 
 	/**
