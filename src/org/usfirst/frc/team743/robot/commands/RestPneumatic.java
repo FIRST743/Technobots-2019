@@ -1,20 +1,23 @@
 package org.usfirst.frc.team743.robot.commands;
 
+import org.usfirst.frc.team743.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.InstantCommand;
 
 /**
  *
  */
-public class ExampleCommand extends InstantCommand {
+public class RestPneumatic extends InstantCommand {
 
-    public ExampleCommand() {
-        super();
+    public RestPneumatic() {
+        requires(Robot.pushPneumatic);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
 
     // Called once when the command executes
     protected void initialize() {
+    	Robot.pushPneumatic.retractClaw();
     }
 
 }
