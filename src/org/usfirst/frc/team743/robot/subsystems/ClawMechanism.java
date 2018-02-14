@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
  */
-public class ClawPneumatics extends Subsystem {
+public class ClawMechanism extends Subsystem {
 
 	Solenoid leftPneumatic = new Solenoid(2);
 	Solenoid rightPneumatic = new Solenoid(3);

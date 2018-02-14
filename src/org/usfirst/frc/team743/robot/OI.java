@@ -11,6 +11,8 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 import org.usfirst.frc.team743.robot.commands.ExampleCommand;
+import org.usfirst.frc.team743.robot.commands.ExtendBigActuator;
+
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -59,7 +61,9 @@ public class OI {
 	Button buttonStickRight = new JoystickButton(Controller, stickRightButton);
 	
 	public OI(){
-		buttonA.whenPressed(new ExampleCommand());
+		
+		buttonA.whenPressed(new ExtendBigActuator());
+		
 	}
 
 	// There are a few additional built in buttons you can use. Additionally,

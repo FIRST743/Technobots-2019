@@ -8,6 +8,7 @@
 package org.usfirst.frc.team743.robot;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -16,6 +17,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team743.robot.commands.ExampleCommand;
 import org.usfirst.frc.team743.robot.subsystems.DriveSystem;
+import org.usfirst.frc.team743.robot.subsystems.Actuators;
+import org.usfirst.frc.team743.robot.subsystems.ClawMechanism;
+import org.usfirst.frc.team743.robot.subsystems.ClimbingMechanism;
+import org.usfirst.frc.team743.robot.subsystems.PushPneumatic;
 
 
 /**
@@ -31,6 +36,14 @@ public class Robot extends TimedRobot {
 	  DriveSystem.topRightTalon, DriveSystem.bottomRightTalon, DriveSystem.bottomLeftTalon);
 	public static OI m_oi;
 
+	public static final Actuators actuators = new Actuators();
+	
+	public static final ClimbingMechanism climbingMechanism = new ClimbingMechanism();
+	
+	public static final ClawMechanism clawMechanism = new ClawMechanism();
+	
+	public static final PushPneumatic pushPneumatic = new PushPneumatic();
+	
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -77,16 +90,16 @@ public class Robot extends TimedRobot {
 		m_autonomousCommand = m_chooser.getSelected();
 
 		
-//		  String autoSelected = SmartDashboard.getString("Auto Selector","Default"); 
-//		  switch(autoSelected) { 
-//		  case "My Auto":
-////				  m_autonomousCommand= new MyAutoCommand(); 
-//				  break; 
-//		  case "Default Auto":
-//		  default: 
-//			  m_autonomousCommand = new ExampleCommand(); 
-//			  break; 
-//		  }
+		  String autoSelected = SmartDashboard.getString("Auto Selector","Default"); 
+		  switch(autoSelected) { 
+		  case "My Auto":
+				  m_autonomousCommand= new ExampleCommand(); 
+				  break; 
+		  case "Default Auto":
+		  default: 
+			  m_autonomousCommand = new ExampleCommand(); 
+			  break; 
+		  }
 		 
 
 		// schedule the autonomous command (example)
