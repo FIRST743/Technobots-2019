@@ -12,6 +12,9 @@ import java.util.function.Function;
 
 import org.usfirst.frc.team743.robot.commands.ExampleCommand;
 import org.usfirst.frc.team743.robot.commands.ExtendBigActuator;
+import org.usfirst.frc.team743.robot.commands.ExtendSmallActuator;
+import org.usfirst.frc.team743.robot.commands.RetractBigActuator;
+import org.usfirst.frc.team743.robot.commands.RetractSmallActuator;
 
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 
@@ -62,9 +65,13 @@ public class OI {
 	
 	public OI(){
 		
-		buttonA.whenPressed(new ExtendBigActuator());
+		buttonRT.whenActive(new ExtendBigActuator());
+		buttonLT.whenActive(new RetractBigActuator());
 		
+		buttonRB.whenActive(new ExtendSmallActuator());
+		buttonLB.whenActive(new RetractSmallActuator());
 	}
+		
 
 	// There are a few additional built in buttons you can use. Additionally,
 	// by subclassing Button you can create custom triggers and bind those to
@@ -86,3 +93,4 @@ public class OI {
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
 }
+	
