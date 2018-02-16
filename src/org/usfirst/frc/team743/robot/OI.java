@@ -65,11 +65,13 @@ public class OI {
 	
 	public OI(){
 		
-		buttonRT.whenActive(new ExtendBigActuator());
-		buttonLT.whenActive(new RetractBigActuator());
+		buttonRT.whileHeld(new ExtendBigActuator());
+		buttonLT.whileHeld(new RetractBigActuator());
 		
-		buttonRB.whenActive(new ExtendSmallActuator());
-		buttonLB.whenActive(new RetractSmallActuator());
+		buttonRB.whileHeld(new ExtendSmallActuator());
+		buttonLB.whileHeld(new RetractSmallActuator());
+		
+		buttonStickLeft.toggleWhenPressed(command);
 	}
 		
 
