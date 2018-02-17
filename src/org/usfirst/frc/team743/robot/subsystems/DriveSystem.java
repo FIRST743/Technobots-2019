@@ -49,8 +49,8 @@ public class DriveSystem extends Subsystem {
      * has to be between -1.0 and 1.0 decimal
      */
     public static void setBottomSpeed(double speed){
-    	topRightTalon.set(speed);
-    	topLeftTalon.set(speed);
+//    	topRightTalon.set(speed);
+//    	topLeftTalon.set(speed);
     }
     
     
