@@ -11,10 +11,10 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class DriveSystem extends Subsystem {
 
-    public static Talon topRightTalon = new Talon(RobotMap.topRightMotor);
-    public static Talon topLeftTalon  = new Talon(RobotMap.topLeftMotor);
-    public static Talon bottomRightTalon = new Talon(RobotMap.bottomRightMotor);
-    public static Talon bottomLeftTalon = new Talon(RobotMap.bottomLeftMotor);
+    public static Talon topRightTalon = new Talon(RobotMap.motorTopRight);
+    public static Talon topLeftTalon  = new Talon(RobotMap.motorTopLeft);
+    public static Talon bottomRightTalon = new Talon(RobotMap.motorBottomRight);
+    public static Talon bottomLeftTalon = new Talon(RobotMap.motorBottomLeft);
     
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
@@ -49,8 +49,8 @@ public class DriveSystem extends Subsystem {
      * has to be between -1.0 and 1.0 decimal
      */
     public static void setBottomSpeed(double speed){
-//    	topRightTalon.set(speed);
-//    	topLeftTalon.set(speed);
+    	topRightTalon.set(speed);
+    	topLeftTalon.set(speed);
     }
     
     

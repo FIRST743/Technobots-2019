@@ -10,8 +10,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Actuators extends Subsystem {
 
-	private static Talon bigActuator = new Talon(RobotMap.bigActuator);
-	private static Talon smallActuator = new Talon(RobotMap.smallActuator);
+	private static Talon bigActuator = new Talon(RobotMap.actuatorBig);
+	private static Talon smallActuator = new Talon(RobotMap.actuatorSmall);
 	
     // Put methods for controlling this subsystem
     // here. Call these from Commands.

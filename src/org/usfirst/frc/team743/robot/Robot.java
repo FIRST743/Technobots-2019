@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team743.robot.commands.ExampleCommand;
+import org.usfirst.frc.team743.robot.commands.TimedAutonomous;
 import org.usfirst.frc.team743.robot.subsystems.DriveSystem;
 import org.usfirst.frc.team743.robot.subsystems.Actuators;
 import org.usfirst.frc.team743.robot.subsystems.ClawMechanism;
@@ -57,8 +57,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		m_oi = new OI();
-		m_chooser.addDefault("Default Auto", new ExampleCommand());
-		m_chooser.addObject("My Auto", new ExampleCommand());
+		//m_chooser.addDefault("Default Auto", new ExampleCommand());
+		//m_chooser.addObject("My Auto", new ExampleCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
 	}
 
@@ -96,11 +96,11 @@ public class Robot extends TimedRobot {
 		  String autoSelected = SmartDashboard.getString("Auto Selector","Default"); 
 		  switch(autoSelected) { 
 		  case "My Auto":
-				  m_autonomousCommand= new ExampleCommand(); 
+				  m_autonomousCommand= new TimedAutonomous(30);
 				  break; 
 		  case "Default Auto":
 		  default: 
-			  m_autonomousCommand = new ExampleCommand(); 
+			  m_autonomousCommand = new TimedAutonomous(30);
 			  break; 
 		  }
 		 

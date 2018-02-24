@@ -22,7 +22,7 @@ public class ExtendBigActuator extends InstantCommand {
     protected void initialize() {
     
     	Robot.actuators.setBigActuator(1);
-    	
+    	System.out.println("Big Actuator - EXTENDING");
     }
 
 }

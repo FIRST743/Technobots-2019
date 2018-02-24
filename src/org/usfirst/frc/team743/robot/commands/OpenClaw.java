@@ -18,6 +18,7 @@ public class OpenClaw extends InstantCommand {
     // Called once when the command executes
     protected void initialize() {
     	Robot.clawMechanism.openClaw();
+    	System.out.println("Claw - OPENING");
     }
 
 }

@@ -1,5 +1,7 @@
 package org.usfirst.frc.team743.robot.subsystems;
 
+import org.usfirst.frc.team743.robot.RobotMap;
+
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -8,8 +10,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class ClimbingMechanism extends Subsystem {
 
-	/*Solenoid bigPneumatic = new Solenoid(0);
-	Solenoid smallPneumatic = new Solenoid(1);*/
+	Solenoid bigPneumatic = new Solenoid(RobotMap.pneumaticClimberBig);
+	Solenoid smallPneumatic = new Solenoid(RobotMap.pneumaticClimberSmall);
 	// Put methods for controlling this subsystem
     // here. Call these from Commands.
 
@@ -20,29 +22,28 @@ public class ClimbingMechanism extends Subsystem {
     
     
     public void extendBigPneumatic() {
-//    	bigPneumatic.set(true);
+    	bigPneumatic.set(true);
     }
     
     public void retractBigPneumatic() {
-//    	bigPneumatic.set(false);
+    	bigPneumatic.set(false);
     }
     
     public void extendSmallPneumatic() {
-//    	smallPneumatic.set(true);
+    	smallPneumatic.set(true);
     }
     
     public void retractSmallPneumatic() {
-//    	smallPneumatic.set(false);
+    	smallPneumatic.set(false);
     }
     
     public void extendBothPneumatics() {
-//    	bigPneumatic.set(true);
-//    	smallPneumatic.set(true);
+    	bigPneumatic.set(true);
+    	smallPneumatic.set(true);
     }
     
     public void retractBothPneumatics() {
-//    	bigPneumatic.set(false);
-//    	smallPneumatic.set(false);
+    	bigPneumatic.set(false);
+    	smallPneumatic.set(false);
     }
 }
-

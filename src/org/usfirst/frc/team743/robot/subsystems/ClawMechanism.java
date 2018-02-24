@@ -1,5 +1,7 @@
 package org.usfirst.frc.team743.robot.subsystems;
 
+import org.usfirst.frc.team743.robot.RobotMap;
+
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -8,8 +10,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class ClawMechanism extends Subsystem {
 
-//	Solenoid leftPneumatic = new Solenoid(2);
-//	Solenoid rightPneumatic = new Solenoid(3);
+	Solenoid leftPneumatic = new Solenoid(RobotMap.pneumaticClawLeft);
+	Solenoid rightPneumatic = new Solenoid(RobotMap.pneumaticClawRight);
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
@@ -19,13 +21,13 @@ public class ClawMechanism extends Subsystem {
     }
     
     public void closeClaw() {
-//    	leftPneumatic.set(true);
-//    	rightPneumatic.set(true);
+    	leftPneumatic.set(true);
+    	rightPneumatic.set(true);
     }
     
     public void openClaw() {
-//    	leftPneumatic.set(false);
-//    	rightPneumatic.set(false);
+    	leftPneumatic.set(false);
+    	rightPneumatic.set(false);
     }
 }
 

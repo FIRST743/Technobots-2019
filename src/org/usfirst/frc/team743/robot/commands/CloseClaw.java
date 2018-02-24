@@ -18,6 +18,7 @@ public class CloseClaw extends InstantCommand {
     // Called once when the command executes
     protected void initialize() {
     	Robot.clawMechanism.closeClaw();
+    	System.out.println("Closing claw...");
     }
 
 }
