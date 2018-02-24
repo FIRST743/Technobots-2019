@@ -34,16 +34,19 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  */
 public class OI {
 	
+	public final int X = 1;
 	public final int A = 2;
 	public final int B = 3;
-	public final int X = 0;
 	public final int Y = 4;
-	public final int START = 10;
-	public final int SELECT = 9;
+
 	public final int LB = 5;
 	public final int RB = 6;
 	public final int LT = 7;
 	public final int RT = 8;
+	
+	public final int SELECT = 9;
+	public final int START = 10;
+
 	public final int stickLeftButton = 11;
 	public final int stickRightButton = 12;
 	
@@ -53,20 +56,20 @@ public class OI {
 	//// joystick.
 	// You create one by telling it which joystick it's on and which button
 	// number it is.
-	XboxController Controller = new 	XboxController(5);
+	XboxController _xboxController = new XboxController(0);
 	
-	Button buttonA = new JoystickButton(Controller, A);
-	Button buttonB = new JoystickButton(Controller, B);
-	Button buttonX = new JoystickButton(Controller, X);
-	Button buttonY = new JoystickButton(Controller, Y);
-	Button buttonSTART = new JoystickButton(Controller, START);
-	Button buttonSELECT = new JoystickButton(Controller, SELECT);
-	Button buttonLB = new JoystickButton(Controller, LB);
-	Button buttonRB = new JoystickButton(Controller, RB);
-	Button buttonLT = new JoystickButton(Controller, LT);
-	Button buttonRT = new JoystickButton(Controller, RT);
-	Button buttonStickLeft = new JoystickButton(Controller, stickLeftButton);
-	Button buttonStickRight = new JoystickButton(Controller, stickRightButton);
+	Button buttonA = new JoystickButton(_xboxController, A);
+	Button buttonB = new JoystickButton(_xboxController, B);
+	Button buttonX = new JoystickButton(_xboxController, X);
+	Button buttonY = new JoystickButton(_xboxController, Y);
+	Button buttonSTART = new JoystickButton(_xboxController, START);
+	Button buttonSELECT = new JoystickButton(_xboxController, SELECT);
+	Button buttonLB = new JoystickButton(_xboxController, LB);
+	Button buttonRB = new JoystickButton(_xboxController, RB);
+	Button buttonLT = new JoystickButton(_xboxController, LT);
+	Button buttonRT = new JoystickButton(_xboxController, RT);
+	Button buttonStickLeft = new JoystickButton(_xboxController, stickLeftButton);
+	Button buttonStickRight = new JoystickButton(_xboxController, stickRightButton);
 	
 	public OI(){
 		
@@ -78,6 +81,7 @@ public class OI {
 		
 		buttonY.whileHeld(new PneumaticToggleCommand(new ExtendBigPneumatic(), new RetractBigPneumatic()));
 		buttonB.whileHeld(new PneumaticToggleCommand(new ExtendSmallPneumatic(), new RetractSmallPneumatic()));
+
 		//buttonStickLeft.toggleWhenPressed(command);
 	}
 		

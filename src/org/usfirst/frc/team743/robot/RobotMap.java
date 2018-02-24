@@ -19,7 +19,6 @@ public class RobotMap {
 	 public static int topRightMotor = 2;
 	 public static int bottomLeftMotor = 3;
 	 public static int bottomRightMotor = 4;
-	 
 	 public static int bigActuator = 5;
 	 public static int smallActuator = 6;
 	 

@@ -32,8 +32,11 @@ import org.usfirst.frc.team743.robot.subsystems.PushPneumatic;
  */
 public class Robot extends TimedRobot {
 	
-	public static final MecanumDrive mecanum = new MecanumDrive(DriveSystem.topLeftTalon,
-	  DriveSystem.topRightTalon, DriveSystem.bottomRightTalon, DriveSystem.bottomLeftTalon);
+	public static final MecanumDrive mecanum = new MecanumDrive(
+			DriveSystem.topLeftTalon,
+			DriveSystem.topRightTalon, 
+			DriveSystem.bottomRightTalon, 
+			DriveSystem.bottomLeftTalon);
 	public static OI m_oi;
 
 	public static final Actuators actuators = new Actuators();

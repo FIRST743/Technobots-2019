@@ -9,8 +9,11 @@ public class PneumaticToggleCommand extends ConditionalCommand {
 	
 	@Override
 	public synchronized void start() {
-		super.start();
-		isExtended = !isExtended;
+		if (!isRunning()) {
+			isExtended = !isExtended;
+			System.out.println("Start called...");
+		}
+		super.start();		
 	}
 	
 	public PneumaticToggleCommand(Command onTrue) {

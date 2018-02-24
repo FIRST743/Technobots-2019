@@ -18,6 +18,9 @@ public class RetractBigPneumatic extends InstantCommand {
     // Called once when the command executes
     protected void initialize() {
     	Robot.climbingMechanism.retractBigPneumatic();
+    	
+    	System.out.println("Retracting Big Pneumatic....");
+    	//super.initialize();
     }
 
 }

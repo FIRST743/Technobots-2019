@@ -15,6 +15,7 @@ public class ExampleCommand extends InstantCommand {
 
     // Called once when the command executes
     protected void initialize() {
+    	System.out.println("A button was pressed");
     }
 
 }

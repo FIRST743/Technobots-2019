@@ -18,6 +18,9 @@ public class ExtendBigPneumatic extends InstantCommand {
     // Called once when the command executes
     protected void initialize() {
     	Robot.climbingMechanism.extendBigPneumatic();
+    	
+    	System.out.println("Extending Big Pneumatic....");
+    	//super.initialize();
     }
 
 }

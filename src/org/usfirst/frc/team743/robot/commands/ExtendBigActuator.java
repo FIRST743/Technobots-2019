@@ -19,7 +19,7 @@ public class ExtendBigActuator extends InstantCommand {
 
     // Called once when the command executes
     @SuppressWarnings("static-access")
-	protected void initialize() {
+    protected void initialize() {
     
     	Robot.actuators.setBigActuator(1);
     	
