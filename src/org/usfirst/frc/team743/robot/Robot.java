@@ -137,8 +137,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		mecanum.driveCartesian(m_oi.Controller.getX(Hand.kLeft)/255,
-		  m_oi.Controller.getY(Hand.kLeft)/255, m_oi.Controller.getX(Hand.kRight)/255);
+		mecanum.driveCartesian(m_oi._xboxController.getX(Hand.kLeft)/255,
+		  m_oi._xboxController.getY(Hand.kLeft)/255, m_oi._xboxController.getX(Hand.kRight)/255);
 	}
 
 	/**
