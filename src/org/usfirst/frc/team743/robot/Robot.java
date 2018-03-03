@@ -7,8 +7,8 @@
 
 package org.usfirst.frc.team743.robot;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -17,14 +17,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team743.robot.subsystems.DriveSystem;
-/*import org.usfirst.frc.team743.robot.commands.autonomous.Station1Command;
+import org.usfirst.frc.team743.robot.commands.autonomous.Station1Command;
 import org.usfirst.frc.team743.robot.commands.autonomous.Station2Command;
 import org.usfirst.frc.team743.robot.commands.autonomous.Station3Command;
-import org.usfirst.frc.team743.robot.commands.autonomous.TimedAutonomous;
-*/import org.usfirst.frc.team743.robot.subsystems.Actuators;
+import org.usfirst.frc.team743.robot.subsystems.Actuators;
 import org.usfirst.frc.team743.robot.subsystems.ClawMechanism;
 import org.usfirst.frc.team743.robot.subsystems.ClimbingMechanism;
-import org.usfirst.frc.team743.robot.subsystems.PushPneumatic;
 
 
 /**
@@ -36,44 +34,28 @@ import org.usfirst.frc.team743.robot.subsystems.PushPneumatic;
  */
 public class Robot extends TimedRobot {
 	
-	private static final int AUTONOMOUS_MODE_LENGTH = 15;
+	// TODO:  Enter the time the command will run.
+	private static final int AUTONOMOUS_MODE_LENGTH = 10;
 	
-	private static final String DB_STRING_0 = "DB/String 0";
-	private static final String DB_STRING_1 = "DB/String 1";
-	private static final String DB_STRING_2 = "DB/String 2";
-	private static final String DB_STRING_3 = "DB/String 3";
-	private static final String DB_STRING_4 = "DB/String 4";
-	private static final String DB_STRING_5 = "DB/String 5";
-	private static final String DB_STRING_6 = "DB/String 6";
-	private static final String DB_STRING_7 = "DB/String 7";
-	private static final String DB_STRING_8 = "DB/String 8";
-	private static final String DB_STRING_9 = "DB/String 9";
-
-	private static final String DB_BUTTON_0 = "DB/Button 0";
-	private static final String DB_BUTTON_1 = "DB/Button 1";
-	private static final String DB_BUTTON_2 = "DB/Button 2";
-	private static final String DB_BUTTON_3 = "DB/Button 3";
-
-	private static final String DB_SLIDER_0 = "DB/Slider 0";
-	private static final String DB_SLIDER_1 = "DB/Slider 1";
-	private static final String DB_SLIDER_2 = "DB/Slider 2";
-	private static final String DB_SLIDER_3 = "DB/Slider 3";
-	
-	
-	public static final MecanumDrive mecanum = new MecanumDrive(
-			DriveSystem.topLeftTalon,
-			DriveSystem.topRightTalon, 
-			DriveSystem.bottomRightTalon, 
-			DriveSystem.bottomLeftTalon);
-	public static OI m_oi;
+	public static double driveX = 0;
+	public static double driveY = 0;
 
 	public static final Actuators actuators = new Actuators();
+	public static final DriveSystem driveSystem = new DriveSystem();
+	public static final ClawMechanism clawMechanism = new ClawMechanism();
+	public static final ClimbingMechanism climbingMechanism = new ClimbingMechanism();
+
 	
-	//public static final ClimbingMechanism climbingMechanism = new ClimbingMechanism();
+	public static final MecanumDrive mecanum = new MecanumDrive(
+			driveSystem.topLeftTalon,
+			driveSystem.topRightTalon, 
+			driveSystem.bottomRightTalon, 
+			driveSystem.bottomLeftTalon);
 	
-	//public static final ClawMechanism clawMechanism = new ClawMechanism();
+	public static OI m_oi;
+
+	private static final Compressor compressor = new Compressor(0);
 	
-	//public static final PushPneumatic pushPneumatic = new PushPneumatic();
 	
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -88,6 +70,7 @@ public class Robot extends TimedRobot {
 		//m_chooser.addDefault("Default Auto", new ExampleCommand());
 		//m_chooser.addObject("My Auto", new ExampleCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
+		compressor.setClosedLoopControl(true);
 	}
 
 	/**
@@ -97,7 +80,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
-
+		
 	}
 
 	@Override
@@ -120,18 +103,16 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		m_autonomousCommand = m_chooser.getSelected();
 
-		  String db_color = SmartDashboard.getString(Robot.DB_STRING_0, "Red");
-		  boolean db_station1 = SmartDashboard.getBoolean(Robot.DB_BUTTON_1, false);
-		  boolean db_station2 = SmartDashboard.getBoolean(Robot.DB_BUTTON_2, false);
-		  boolean db_station3 = SmartDashboard.getBoolean(Robot.DB_BUTTON_3, false);
-		  
+		  boolean db_station1 = SmartDashboard.getBoolean(RobotMap.DB_BUTTON_1, false);
+		  boolean db_station2 = SmartDashboard.getBoolean(RobotMap.DB_BUTTON_2, false);
+		  boolean db_station3 = SmartDashboard.getBoolean(RobotMap.DB_BUTTON_3, false);
 
-		  System.out.println("Dashboard values:  Color: " + db_color + 
+		  System.out.println("Dashboard values: " + 
 				  " Station1: " + db_station1 +
 				  " Station2: " + db_station2 +
 				  " Station3: " + db_station3);
 		  
-/*		  if (db_station1) {
+		  if (db_station1) {
 			  m_autonomousCommand = new Station1Command(Robot.AUTONOMOUS_MODE_LENGTH);
 		  }
 		  else if (db_station2) {
@@ -140,7 +121,7 @@ public class Robot extends TimedRobot {
 		  else if (db_station3) {
 			  m_autonomousCommand = new Station3Command(Robot.AUTONOMOUS_MODE_LENGTH);			  
 		  }		 
-*/
+
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
@@ -153,6 +134,13 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		
+		mecanum.driveCartesian(
+				driveX,
+				driveY, 
+				0,
+				0
+		);
 	}
 
 	@Override
@@ -176,14 +164,18 @@ public class Robot extends TimedRobot {
 		mecanum.driveCartesian(
 				m_oi._xboxController.getX(Hand.kLeft)*.5,
 				m_oi._xboxController.getY(Hand.kLeft)*.5, 
-				m_oi._xboxController.getX(Hand.kRight)
+				0,
+				0
 		);
 	}
-
+	
 	/**
 	 * This function is called periodically during test mode.
 	 */
 	@Override
 	public void testPeriodic() {
 	}
+
+
+	
 }

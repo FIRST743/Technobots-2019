@@ -15,11 +15,10 @@ public class RetractBigActuator extends InstantCommand {
         // eg. requires(chassis);
     }
 
-    // Called once when the command executes
-    @SuppressWarnings("static-access")
+	// Called once when the command executes
+	@SuppressWarnings("static-access")
 	protected void initialize() {
-    	Robot.actuators.setBigActuator(-1.0);
-    	System.out.println("Big Actuator - RETRACTING");
-    }
-
+		Robot.actuators.setBigActuator(-1.0);
+		System.out.println("Big Actuator - RETRACTING");
+	}
 }

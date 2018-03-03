@@ -9,20 +9,14 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
  */
 public class ExtendBigActuator extends InstantCommand {
 
-    public ExtendBigActuator() {
-    	requires(Robot.actuators);
-    	
-    	
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    }
+	public ExtendBigActuator() {
+		requires(Robot.actuators);
+	}
 
-    // Called once when the command executes
-    @SuppressWarnings("static-access")
-    protected void initialize() {
-    
-    	Robot.actuators.setBigActuator(1);
-    	System.out.println("Big Actuator - EXTENDING");
-    }
-
+	// Called once when the command executes
+	@SuppressWarnings("static-access")
+	protected void initialize() {
+		Robot.actuators.setBigActuator(1.0);
+		System.out.println("Big Actuator - EXTENDING");
+	}
 }

@@ -11,8 +11,6 @@ public class StopBigActuator extends InstantCommand {
 
     public StopBigActuator() {
         requires(Robot.actuators);
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
     }
 
     // Called once when the command executes

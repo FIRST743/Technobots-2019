@@ -2,7 +2,7 @@ package org.usfirst.frc.team743.robot.subsystems;
 
 import org.usfirst.frc.team743.robot.RobotMap;
 
-import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -10,8 +10,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class ClawMechanism extends Subsystem {
 
-	Solenoid leftPneumatic = new Solenoid(RobotMap.pneumaticClawLeft);
-	Solenoid rightPneumatic = new Solenoid(RobotMap.pneumaticClawRight);
+	DoubleSolenoid clawPneumatics = new DoubleSolenoid(RobotMap.pneumaticClawOpen,RobotMap.pneumaticClawClose);
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
@@ -21,13 +20,10 @@ public class ClawMechanism extends Subsystem {
     }
     
     public void closeClaw() {
-    	leftPneumatic.set(true);
-    	rightPneumatic.set(true);
+    	clawPneumatics.set(DoubleSolenoid.Value.kForward);
     }
     
     public void openClaw() {
-    	leftPneumatic.set(false);
-    	rightPneumatic.set(false);
+    	clawPneumatics.set(DoubleSolenoid.Value.kReverse);
     }
 }
-

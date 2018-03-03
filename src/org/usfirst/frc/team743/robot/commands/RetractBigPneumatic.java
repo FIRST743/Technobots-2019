@@ -10,15 +10,12 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 public class RetractBigPneumatic extends InstantCommand {
 
     public RetractBigPneumatic() {
-//        requires(Robot.climbingMechanism);
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+        requires(Robot.climbingMechanism);
     }
 
     // Called once when the command executes
     protected void initialize() {
-//    	Robot.climbingMechanism.retractBigPneumatic();
-//    	System.out.println("Big Pneumatic - RETRACTING");
+    	Robot.climbingMechanism.retractBigPneumatic();
+    	System.out.println("Big Pneumatic - RETRACTING");
 	}
-
 }
