@@ -1,20 +1,24 @@
-package org.usfirst.frc.team743.robot.commands;
+package org.usfirst.frc.team743.robot.commands.autonomous;
+
+import org.usfirst.frc.team743.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.TimedCommand;
 
 /**
  *
  */
-public class TimedAutonomous extends TimedCommand {
+public abstract class TimedAutonomous extends TimedCommand {
 
     public TimedAutonomous(double timeout) {
         super(timeout);
+        requires(Robot.actuators);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);//
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	this.run_sequence();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -33,7 +37,8 @@ public class TimedAutonomous extends TimedCommand {
     }
     
     // this is the command that we should execute any time we want to stop the autonomous command
-    protected void stop_autonomous() {
-    	
-    }
+    protected abstract void stop_autonomous();
+    
+    // this is the command the should be actually execute the sequence of commands during autonomous mode
+    protected abstract void run_sequence();
 }
