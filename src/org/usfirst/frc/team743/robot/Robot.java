@@ -17,11 +17,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team743.robot.subsystems.DriveSystem;
-import org.usfirst.frc.team743.robot.commands.autonomous.Station1Command;
+/*import org.usfirst.frc.team743.robot.commands.autonomous.Station1Command;
 import org.usfirst.frc.team743.robot.commands.autonomous.Station2Command;
 import org.usfirst.frc.team743.robot.commands.autonomous.Station3Command;
 import org.usfirst.frc.team743.robot.commands.autonomous.TimedAutonomous;
-import org.usfirst.frc.team743.robot.subsystems.Actuators;
+*/import org.usfirst.frc.team743.robot.subsystems.Actuators;
 import org.usfirst.frc.team743.robot.subsystems.ClawMechanism;
 import org.usfirst.frc.team743.robot.subsystems.ClimbingMechanism;
 import org.usfirst.frc.team743.robot.subsystems.PushPneumatic;
@@ -120,9 +120,6 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		m_autonomousCommand = m_chooser.getSelected();
 
-		
-		  String autoSelected = SmartDashboard.getString("Auto Selector","Default"); 
-		  
 		  String db_color = SmartDashboard.getString(Robot.DB_STRING_0, "Red");
 		  boolean db_station1 = SmartDashboard.getBoolean(Robot.DB_BUTTON_1, false);
 		  boolean db_station2 = SmartDashboard.getBoolean(Robot.DB_BUTTON_2, false);
@@ -134,7 +131,7 @@ public class Robot extends TimedRobot {
 				  " Station2: " + db_station2 +
 				  " Station3: " + db_station3);
 		  
-		  if (db_station1) {
+/*		  if (db_station1) {
 			  m_autonomousCommand = new Station1Command(Robot.AUTONOMOUS_MODE_LENGTH);
 		  }
 		  else if (db_station2) {
@@ -143,7 +140,7 @@ public class Robot extends TimedRobot {
 		  else if (db_station3) {
 			  m_autonomousCommand = new Station3Command(Robot.AUTONOMOUS_MODE_LENGTH);			  
 		  }		 
-
+*/
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
@@ -176,8 +173,11 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		mecanum.driveCartesian(m_oi._xboxController.getX(Hand.kLeft)*.25,
-		  m_oi._xboxController.getY(Hand.kLeft)*.25, m_oi._xboxController.getX(Hand.kRight));
+		mecanum.driveCartesian(
+				m_oi._xboxController.getX(Hand.kLeft)*.5,
+				m_oi._xboxController.getY(Hand.kLeft)*.5, 
+				m_oi._xboxController.getX(Hand.kRight)
+		);
 	}
 
 	/**
