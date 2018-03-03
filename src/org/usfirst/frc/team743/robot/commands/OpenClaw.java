@@ -10,15 +10,15 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 public class OpenClaw extends InstantCommand {
 
     public OpenClaw() {
-        requires(Robot.clawMechanism);
+//        requires(Robot.clawMechanism);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
 
     // Called once when the command executes
     protected void initialize() {
-    	Robot.clawMechanism.openClaw();
-    	System.out.println("Claw - OPENING");
+//    	Robot.clawMechanism.openClaw();
+//    	System.out.println("Claw - OPENING");
     }
 
 }

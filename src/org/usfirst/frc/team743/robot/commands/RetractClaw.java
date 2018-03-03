@@ -7,12 +7,12 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 public class RetractClaw extends InstantCommand {
 	
 	public RetractClaw() {
-        requires(Robot.pushPneumatic);
+//        requires(Robot.pushPneumatic);
     }
 
     // Called once when the command executes
     protected void initialize() {
-    	Robot.pushPneumatic.retractClaw();
-    	System.out.println("Claw Push - RETRACTING");
+//    	Robot.pushPneumatic.retractClaw();
+//    	System.out.println("Claw Push - RETRACTING");
     }
 }

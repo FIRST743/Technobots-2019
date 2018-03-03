@@ -21,5 +21,6 @@ public class ExtendSmallActuator extends InstantCommand {
     	Robot.actuators.setSmallActuator(1.0);
     	System.out.println("Small Actuator - EXTENDING");
     }
+    
 
 }

@@ -21,6 +21,8 @@ import org.usfirst.frc.team743.robot.commands.RetractBigPneumatic;
 import org.usfirst.frc.team743.robot.commands.RetractClaw;
 import org.usfirst.frc.team743.robot.commands.RetractSmallActuator;
 import org.usfirst.frc.team743.robot.commands.RetractSmallPneumatic;
+import org.usfirst.frc.team743.robot.commands.StopBigActuator;
+import org.usfirst.frc.team743.robot.commands.StopSmallActuator;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -34,15 +36,15 @@ import edu.wpi.first.wpilibj.drive.MecanumDrive;
  */
 public class OI {
 	
-	public final int X = 1;
-	public final int A = 2;
-	public final int B = 3;
+	public final int X = 2;
+	public final int A = 3;
+	public final int B = 1;
 	public final int Y = 4;
 
 	public final int LB = 5;
-	public final int RB = 6;
+	public final int RB = 8;
 	public final int LT = 7;
-	public final int RT = 8;
+	public final int RT = 6;
 	
 	public final int SELECT = 9;
 	public final int START = 10;
@@ -73,10 +75,14 @@ public class OI {
 	public OI(){
 		
 		buttonRT.whileHeld(new ExtendBigActuator());
+		buttonRT.whenReleased(new StopBigActuator());
 		buttonRB.whileHeld(new RetractBigActuator());
+		buttonRB.whenReleased(new StopBigActuator());
 		
 		buttonLT.whileHeld(new ExtendSmallActuator());
+		buttonLT.whenReleased(new StopSmallActuator());
 		buttonLB.whileHeld(new RetractSmallActuator());
+		buttonLB.whenReleased(new StopSmallActuator());
 		
 		buttonY.whileHeld(new PneumaticToggleCommand(new ExtendBigPneumatic(), new RetractBigPneumatic()));
 		buttonB.whileHeld(new PneumaticToggleCommand(new ExtendSmallPneumatic(), new RetractSmallPneumatic()));

@@ -41,11 +41,11 @@ public class Robot extends TimedRobot {
 
 	public static final Actuators actuators = new Actuators();
 	
-	public static final ClimbingMechanism climbingMechanism = new ClimbingMechanism();
+	//public static final ClimbingMechanism climbingMechanism = new ClimbingMechanism();
 	
-	public static final ClawMechanism clawMechanism = new ClawMechanism();
+	//public static final ClawMechanism clawMechanism = new ClawMechanism();
 	
-	public static final PushPneumatic pushPneumatic = new PushPneumatic();
+	//public static final PushPneumatic pushPneumatic = new PushPneumatic();
 	
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -137,8 +137,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		mecanum.driveCartesian(m_oi._xboxController.getX(Hand.kLeft)/255,
-		  m_oi._xboxController.getY(Hand.kLeft)/255, m_oi._xboxController.getX(Hand.kRight)/255);
+		mecanum.driveCartesian(m_oi._xboxController.getX(Hand.kLeft)*.25,
+		  m_oi._xboxController.getY(Hand.kLeft)*.25, m_oi._xboxController.getX(Hand.kRight));
 	}
 
 	/**

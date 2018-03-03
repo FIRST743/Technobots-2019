@@ -23,10 +23,17 @@ public class TimedAutonomous extends TimedCommand {
 
     // Called once after timeout
     protected void end() {
+    	this.stop_autonomous();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	this.stop_autonomous();
+    }
+    
+    // this is the command that we should execute any time we want to stop the autonomous command
+    protected void stop_autonomous() {
+    	
     }
 }
