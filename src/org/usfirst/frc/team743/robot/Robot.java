@@ -121,26 +121,28 @@ public class Robot extends TimedRobot {
 		m_autonomousCommand = m_chooser.getSelected();
 
 		
-	  String db_color = SmartDashboard.getString(Robot.DB_STRING_0, "Red");
-	  boolean db_station1 = SmartDashboard.getBoolean(Robot.DB_BUTTON_1, false);
-	  boolean db_station2 = SmartDashboard.getBoolean(Robot.DB_BUTTON_2, false);
-	  boolean db_station3 = SmartDashboard.getBoolean(Robot.DB_BUTTON_3, false);
-	  
-	
-	  System.out.println("Dashboard values:  Color: " + db_color + 
-	  " Station1: " + db_station1 +
-	  " Station2: " + db_station2 +
-	  " Station3: " + db_station3);
-	  
-	  if (db_station1) {
-		  m_autonomousCommand = new Station1Command(Robot.AUTONOMOUS_MODE_LENGTH);
-	  }
-	  else if (db_station2) {
-		  m_autonomousCommand = new Station2Command(Robot.AUTONOMOUS_MODE_LENGTH);			  
-	  }
-	  else if (db_station3) {
-		  m_autonomousCommand = new Station3Command(Robot.AUTONOMOUS_MODE_LENGTH);			  
-	  }		 
+		  String autoSelected = SmartDashboard.getString("Auto Selector","Default"); 
+		  
+		  String db_color = SmartDashboard.getString(Robot.DB_STRING_0, "Red");
+		  boolean db_station1 = SmartDashboard.getBoolean(Robot.DB_BUTTON_1, false);
+		  boolean db_station2 = SmartDashboard.getBoolean(Robot.DB_BUTTON_2, false);
+		  boolean db_station3 = SmartDashboard.getBoolean(Robot.DB_BUTTON_3, false);
+		  
+
+		  System.out.println("Dashboard values:  Color: " + db_color + 
+				  " Station1: " + db_station1 +
+				  " Station2: " + db_station2 +
+				  " Station3: " + db_station3);
+		  
+		  if (db_station1) {
+			  m_autonomousCommand = new Station1Command(Robot.AUTONOMOUS_MODE_LENGTH);
+		  }
+		  else if (db_station2) {
+			  m_autonomousCommand = new Station2Command(Robot.AUTONOMOUS_MODE_LENGTH);			  
+		  }
+		  else if (db_station3) {
+			  m_autonomousCommand = new Station3Command(Robot.AUTONOMOUS_MODE_LENGTH);			  
+		  }		 
 
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {

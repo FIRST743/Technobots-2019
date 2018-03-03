@@ -15,10 +15,10 @@ package org.usfirst.frc.team743.robot;
  */
 public class RobotMap {
 	
-	 public static int motorTopLeft = 2;
-	 public static int motorTopRight = 1;
-	 public static int motorBottomLeft = 3;
-	 public static int motorBottomRight = 4;
+	 public static int motorTopLeft = 4;
+	 public static int motorTopRight = 3;
+	 public static int motorBottomLeft = 5;
+	 public static int motorBottomRight = 0;
 	 
 	 public static int actuatorBig = 1;
 	 public static int actuatorSmall = 2;
