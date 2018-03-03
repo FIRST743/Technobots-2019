@@ -14,13 +14,48 @@ package org.usfirst.frc.team743.robot;
  * floating around.
  */
 public class RobotMap {
-	// For example to map the left and right motors, you could define the
-	// following variables to use with your drivetrain subsystem.
-	// public static int leftMotor = 1;
-	// public static int rightMotor = 2;
+	
+	 public static final int motorTopLeft = 1;
+	 public static final int motorTopRight = 0;
+	 public static final int motorBottomLeft = 2;
+	 public static final int motorBottomRight = 3;
+	 
+	 public static final int actuatorBig = 4;
+	 public static final int actuatorSmall = 5;
+	 
+	 public static final int rangefinderPort = 7;
+	 public static final int rangefinderModule = 8;
+	 
+	 public static final int pneumaticClawOpen = 5;
+	 public static final int pneumaticClawClose = 2;
+	 
+	 public static final int pneumaticClimberBigUp = 6;
+	 public static final int pneumaticClimberBigDown = 1;
+	 
+	 public static final int pneumaticClimberSmallUp = 4;
+	 public static final int pneumaticClimberSmallDown = 3;
+	 
+	 public static final int pneumaticClawPush = 5;
+	 
+	 public static final String DB_STRING_0 = "DB/String 0";
+	 public static final String DB_STRING_1 = "DB/String 1";
+	 public static final String DB_STRING_2 = "DB/String 2";
+	 public static final String DB_STRING_3 = "DB/String 3";
+	 public static final String DB_STRING_4 = "DB/String 4";
+	 public static final String DB_STRING_5 = "DB/String 5";
+	 public static final String DB_STRING_6 = "DB/String 6";
+	 public static final String DB_STRING_7 = "DB/String 7";
+	 public static final String DB_STRING_8 = "DB/String 8";
+	 public static final String DB_STRING_9 = "DB/String 9";
 
-	// If you are using multiple modules, make sure to define both the port
-	// number and the module. For example you with a rangefinder:
-	// public static int rangefinderPort = 1;
-	// public static int rangefinderModule = 1;
+	 public static final String DB_BUTTON_0 = "DB/Button 0";
+	 public static final String DB_BUTTON_1 = "DB/Button 1";
+	 public static final String DB_BUTTON_2 = "DB/Button 2";
+	 public static final String DB_BUTTON_3 = "DB/Button 3";
+
+	 public static final String DB_SLIDER_0 = "DB/Slider 0";
+	 public static final String DB_SLIDER_1 = "DB/Slider 1";
+	 public static final String DB_SLIDER_2 = "DB/Slider 2";
+	 public static final String DB_SLIDER_3 = "DB/Slider 3";
+	 
 }

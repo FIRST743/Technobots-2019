@@ -7,13 +7,23 @@
 
 package org.usfirst.frc.team743.robot;
 
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team743.robot.commands.ExampleCommand;
-import org.usfirst.frc.team743.robot.subsystems.ExampleSubsystem;
+
+import org.usfirst.frc.team743.robot.subsystems.DriveSystem;
+import org.usfirst.frc.team743.robot.commands.autonomous.Station1Command;
+import org.usfirst.frc.team743.robot.commands.autonomous.Station2Command;
+import org.usfirst.frc.team743.robot.commands.autonomous.Station3Command;
+import org.usfirst.frc.team743.robot.subsystems.Actuators;
+import org.usfirst.frc.team743.robot.subsystems.ClawMechanism;
+import org.usfirst.frc.team743.robot.subsystems.ClimbingMechanism;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -23,10 +33,30 @@ import org.usfirst.frc.team743.robot.subsystems.ExampleSubsystem;
  * project.
  */
 public class Robot extends TimedRobot {
-	public static final ExampleSubsystem kExampleSubsystem
-			= new ExampleSubsystem();
+	
+	// TODO:  Enter the time the command will run.
+	private static final int AUTONOMOUS_MODE_LENGTH = 10;
+	
+	public static double driveX = 0;
+	public static double driveY = 0;
+
+	public static final Actuators actuators = new Actuators();
+	public static final DriveSystem driveSystem = new DriveSystem();
+	public static final ClawMechanism clawMechanism = new ClawMechanism();
+	public static final ClimbingMechanism climbingMechanism = new ClimbingMechanism();
+
+	
+	public static final MecanumDrive mecanum = new MecanumDrive(
+			driveSystem.topLeftTalon,
+			driveSystem.topRightTalon, 
+			driveSystem.bottomRightTalon, 
+			driveSystem.bottomLeftTalon);
+	
 	public static OI m_oi;
 
+	private static final Compressor compressor = new Compressor(0);
+	
+	
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -37,9 +67,10 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		m_oi = new OI();
-		m_chooser.addDefault("Default Auto", new ExampleCommand());
-		// chooser.addObject("My Auto", new MyAutoCommand());
+		//m_chooser.addDefault("Default Auto", new ExampleCommand());
+		//m_chooser.addObject("My Auto", new ExampleCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
+		compressor.setClosedLoopControl(true);
 	}
 
 	/**
@@ -49,7 +80,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
-
+		
 	}
 
 	@Override
@@ -72,12 +103,24 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		m_autonomousCommand = m_chooser.getSelected();
 
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
+		  boolean db_station1 = SmartDashboard.getBoolean(RobotMap.DB_BUTTON_1, false);
+		  boolean db_station2 = SmartDashboard.getBoolean(RobotMap.DB_BUTTON_2, false);
+		  boolean db_station3 = SmartDashboard.getBoolean(RobotMap.DB_BUTTON_3, false);
+
+		  System.out.println("Dashboard values: " + 
+				  " Station1: " + db_station1 +
+				  " Station2: " + db_station2 +
+				  " Station3: " + db_station3);
+		  
+		  if (db_station1) {
+			  m_autonomousCommand = new Station1Command(Robot.AUTONOMOUS_MODE_LENGTH);
+		  }
+		  else if (db_station2) {
+			  m_autonomousCommand = new Station2Command(Robot.AUTONOMOUS_MODE_LENGTH);			  
+		  }
+		  else if (db_station3) {
+			  m_autonomousCommand = new Station3Command(Robot.AUTONOMOUS_MODE_LENGTH);			  
+		  }		 
 
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {
@@ -91,6 +134,13 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		
+		mecanum.driveCartesian(
+				driveX,
+				driveY, 
+				0,
+				0
+		);
 	}
 
 	@Override
@@ -102,6 +152,7 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
+		
 	}
 
 	/**
@@ -110,12 +161,21 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		mecanum.driveCartesian(
+				m_oi._xboxController.getX(Hand.kLeft)*.5,
+				m_oi._xboxController.getY(Hand.kLeft)*.5, 
+				0,
+				0
+		);
 	}
-
+	
 	/**
 	 * This function is called periodically during test mode.
 	 */
 	@Override
 	public void testPeriodic() {
 	}
+
+
+	
 }
