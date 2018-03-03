@@ -1,4 +1,4 @@
-package org.usfirst.frc.team743.robot.commands;
+package org.usfirst.frc.team743.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.command.TimedCommand;
 
@@ -15,6 +15,7 @@ public class TimedAutonomous extends TimedCommand {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
