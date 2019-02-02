@@ -20,7 +20,6 @@ public class Actuators extends Subsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
-    
     public static void setBigActuator(double speed) {
     	bigActuator.set(speed);
     }

@@ -19,6 +19,7 @@ public class StopSmallActuator extends InstantCommand {
     @SuppressWarnings("static-access")
 	protected void initialize() {
     	Robot.actuators.setSmallActuator(0);
+    	Robot.actuators.setSmallActuator(0);
     }
 
 }

@@ -18,8 +18,11 @@ public class ExtendSmallActuator extends InstantCommand {
     // Called once when the command executes
     @SuppressWarnings("static-access")
 	protected void initialize() {
-    	Robot.actuators.setSmallActuator(1.0);
+    	Robot.actuators.setSmallActuator(1);
+    	Robot.actuators.setBigActuator(1);
     	System.out.println("Small Actuator - EXTENDING");
+    	
+    	
     }
     
 

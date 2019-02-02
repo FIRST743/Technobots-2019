@@ -20,8 +20,9 @@ public class RobotMap {
 	 public static final int motorBottomLeft = 2;
 	 public static final int motorBottomRight = 3;
 	 
-	 public static final int actuatorBig = 4;
+	 public static final int actuatorBig = 8;
 	 public static final int actuatorSmall = 5;
+	 public static final int actuatorClimb = 6;
 	 
 	 public static final int rangefinderPort = 7;
 	 public static final int rangefinderModule = 8;

@@ -9,19 +9,21 @@ package org.usfirst.frc.team743.robot;
 
 import org.usfirst.frc.team743.robot.commands.CloseClaw;
 import org.usfirst.frc.team743.robot.commands.ExtendBigActuator;
-import org.usfirst.frc.team743.robot.commands.ExtendBigPneumatic;
+import org.usfirst.frc.team743.robot.commands.ExtendClimbingActuator;
 import org.usfirst.frc.team743.robot.commands.ExtendSmallActuator;
 import org.usfirst.frc.team743.robot.commands.ExtendSmallPneumatic;
 import org.usfirst.frc.team743.robot.commands.OpenClaw;
 import org.usfirst.frc.team743.robot.commands.PneumaticToggleCommand;
 import org.usfirst.frc.team743.robot.commands.RetractBigActuator;
-import org.usfirst.frc.team743.robot.commands.RetractBigPneumatic;
+import org.usfirst.frc.team743.robot.commands.RetractClimbingActuator;
 import org.usfirst.frc.team743.robot.commands.RetractSmallActuator;
 import org.usfirst.frc.team743.robot.commands.RetractSmallPneumatic;
 import org.usfirst.frc.team743.robot.commands.StopBigActuator;
+import org.usfirst.frc.team743.robot.commands.StopClimbingActuator;
 import org.usfirst.frc.team743.robot.commands.StopSmallActuator;
 
 import edu.wpi.first.wpilibj.XboxController;
+
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
@@ -31,6 +33,8 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  */
 public class OI {
 	
+	
+// Initializing the pin buttons (Mapping the controller button)
 	public final int X = 2;
 	public final int A = 3;
 	public final int B = 1;
@@ -47,13 +51,10 @@ public class OI {
 	public final int stickLeftButton = 11;
 	public final int stickRightButton = 12;
 	
-	//// CREATING BUTTONS
-	// One type of button is a joystick button which is any button on a
-	//// joystick.
-	// You create one by telling it which joystick it's on and which button
-	// number it is.
+//Construct creating the controller object
 	XboxController _xboxController = new XboxController(0);
 	
+//Construct creating the individual button within the controller object.
 	Button buttonA = new JoystickButton(_xboxController, A);
 	Button buttonB = new JoystickButton(_xboxController, B);
 	Button buttonX = new JoystickButton(_xboxController, X);
@@ -68,22 +69,37 @@ public class OI {
 	Button buttonStickRight = new JoystickButton(_xboxController, stickRightButton);
 	
 	public OI(){
+		//Extends the BigActuator when button RT is pressed and stops it when the button is released.
+//		buttonRT.whileHeld(new RetractBigActuator());
+//		buttonRT.whenReleased(new StopBigActuator());
+//		
+//		//Retracts the BigActuator when button LT is pressed and stops it when the button is released.
+//		buttonLT.whileHeld(new ExtendBigActuator());
+//		buttonLT.whenReleased(new StopBigActuator());
 		
-		buttonRT.whileHeld(new ExtendBigActuator());
-		buttonRT.whenReleased(new StopBigActuator());
-		buttonRB.whileHeld(new RetractBigActuator());
-		buttonRB.whenReleased(new StopBigActuator());
-		
-		buttonLT.whileHeld(new ExtendSmallActuator());
-		buttonLT.whenReleased(new StopSmallActuator());
-		buttonLB.whileHeld(new RetractSmallActuator());
+		//Extends the SmallActuator when button RB is pressed and stops it when the button is released.
+		buttonLB.whileHeld(new ExtendSmallActuator());
 		buttonLB.whenReleased(new StopSmallActuator());
 		
+		//Retracts the SmallActuator when button LB is pressed and stops it when the button is released.
+		buttonRB.whileHeld(new RetractSmallActuator());
+		buttonRB.whenReleased(new StopSmallActuator());
+		
+		//Extends the ClimbingActuator when button "START" is pressed and stops it when the button is released.
+		buttonSELECT.whileHeld(new ExtendClimbingActuator());
+		buttonSELECT.whenReleased(new StopClimbingActuator());
+		
+		
+		buttonSTART.whileHeld(new RetractClimbingActuator());
+		buttonSTART.whenReleased(new StopClimbingActuator());
+		//Retracts the ClimbingActuator when button "SELECT" is pressed and stops it when the button is released.
+		
+		//Button X will act as a "switch" to open and close the claw..
 		buttonX.whenPressed(new PneumaticToggleCommand(new OpenClaw(), new CloseClaw()));
 		
-		buttonA.whileHeld(new PneumaticToggleCommand(new ExtendBigPneumatic(), new RetractBigPneumatic()));
-		
+		//Button Y will act as a "switch to extend and retract the small pneumatic and the push-down pneumatic"
 		buttonY.whileHeld(new PneumaticToggleCommand(new ExtendSmallPneumatic(), new RetractSmallPneumatic()));
+		
 	}
 		
 
