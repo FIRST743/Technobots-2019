@@ -10,15 +10,16 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 public class RetractSmallActuator extends InstantCommand {
 
     public RetractSmallActuator() {
-        requires(Robot.actuators);
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+        
+    	requires(Robot.actuators);
+        
     }
 
     // Called once when the command executes
     @SuppressWarnings("static-access")
 	protected void initialize() {
-    	Robot.actuators.setSmallActuator(-1.0);
+    	Robot.actuators.setSmallActuator(-1);
+    	Robot.actuators.setBigActuator(-1);
     	System.out.println("Small Actuator - RETRACTING");
     }
 

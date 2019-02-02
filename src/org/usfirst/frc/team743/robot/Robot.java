@@ -7,7 +7,12 @@
 
 package org.usfirst.frc.team743.robot;
 
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -17,9 +22,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team743.robot.subsystems.DriveSystem;
-import org.usfirst.frc.team743.robot.commands.autonomous.Station1Command;
-import org.usfirst.frc.team743.robot.commands.autonomous.Station2Command;
-import org.usfirst.frc.team743.robot.commands.autonomous.Station3Command;
+import org.opencv.core.Mat;
+import org.opencv.imgproc.Imgproc;
+import org.usfirst.frc.team743.robot.commands.autonomous.DoNothing;
+import org.usfirst.frc.team743.robot.commands.autonomous.LeftSwitch;
+import org.usfirst.frc.team743.robot.commands.autonomous.RightSwitch;
+import org.usfirst.frc.team743.robot.commands.autonomous.GoStraight;
 import org.usfirst.frc.team743.robot.subsystems.Actuators;
 import org.usfirst.frc.team743.robot.subsystems.ClawMechanism;
 import org.usfirst.frc.team743.robot.subsystems.ClimbingMechanism;
@@ -34,30 +42,38 @@ import org.usfirst.frc.team743.robot.subsystems.ClimbingMechanism;
  */
 public class Robot extends TimedRobot {
 	
-	// TODO:  Enter the time the command will run.
-	private static final int AUTONOMOUS_MODE_LENGTH = 10;
 	
-	public static double driveX = 0;
-	public static double driveY = 0;
-
+	// TODO:  Enter the time the command will run.
+	private static final int AUTONOMOUS_MODE_LENGTH = 15;
+	
+	//Variables for controlling the wheels during autonomous
+	public static double driveX ;
+	public static double driveY ;
+	public static double driveZ ;
+	
+	//Constructors with are instantiating the subsystems
 	public static final Actuators actuators = new Actuators();
+	
 	public static final DriveSystem driveSystem = new DriveSystem();
+	
 	public static final ClawMechanism clawMechanism = new ClawMechanism();
+	
 	public static final ClimbingMechanism climbingMechanism = new ClimbingMechanism();
 
-	
 	public static final MecanumDrive mecanum = new MecanumDrive(
 			driveSystem.topLeftTalon,
-			driveSystem.topRightTalon, 
-			driveSystem.bottomRightTalon, 
-			driveSystem.bottomLeftTalon);
+			driveSystem.bottomLeftTalon,
+			driveSystem.topRightTalon,
+			driveSystem.bottomRightTalon);
 	
 	public static OI m_oi;
 
 	private static final Compressor compressor = new Compressor(0);
 	
-	
+	//Instantiating the variable containing the autonomous command.
 	Command m_autonomousCommand;
+	
+	//Instantiating the chooser for the SmartDashboard
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 
 	/**
@@ -67,11 +83,35 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		m_oi = new OI();
-		//m_chooser.addDefault("Default Auto", new ExampleCommand());
-		//m_chooser.addObject("My Auto", new ExampleCommand());
-		SmartDashboard.putData("Auto mode", m_chooser);
+		
 		compressor.setClosedLoopControl(true);
+		new Thread(() -> {
+            UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+            camera.setResolution(640, 480);
+            
+            CvSink cvSink = CameraServer.getInstance().getVideo();
+            CvSource outputStream = CameraServer.getInstance().putVideo("Blur", 820, 820);
+            
+            Mat source = new Mat();
+            Mat output = new Mat();
+            
+            while(!Thread.interrupted()) {
+                cvSink.grabFrame(source);
+                Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
+                outputStream.putFrame(output);
+            }
+        }).start();
+		
+		//Constructing adding options to the smart dashboard.
+//		m_chooser.addObject("Default Auto", new Station1Command(AUTONOMOUS_MODE_LENGTH));
+//		m_chooser.addObject("Middle", new Station2Command(AUTONOMOUS_MODE_LENGTH));
+//		m_chooser.addObject("Right", new Station3Command(AUTONOMOUS_MODE_LENGTH));
+		m_chooser.addDefault("Straight", new GoStraight(AUTONOMOUS_MODE_LENGTH));
+		m_chooser.addObject("Nothing", new DoNothing(AUTONOMOUS_MODE_LENGTH));
+		
+		SmartDashboard.putData("Auto mode", m_chooser);
 	}
+	
 
 	/**
 	 * This function is called once each time the robot enters Disabled mode.
@@ -89,6 +129,7 @@ public class Robot extends TimedRobot {
 	}
 
 	/**
+	 * 
 	 * This autonomous (along with the chooser code above) shows how to select
 	 * between different autonomous modes using the dashboard. The sendable
 	 * chooser code works with the Java SmartDashboard. If you prefer the
@@ -101,28 +142,44 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+	
+		compressor.setClosedLoopControl(true);
+		
+//		String gameData;
+//		gameData = DriverStation.getInstance().getGameSpecificMessage();
+//                if(gameData.length() > 0)
+//                {
+//		  if(gameData.charAt(0) == 'L')
+//		  {
+//			//Put left auto code here
+//		  } else {
+//			//Put right auto code here
+//		  }
+//                }
+		
 		m_autonomousCommand = m_chooser.getSelected();
 
-		  boolean db_station1 = SmartDashboard.getBoolean(RobotMap.DB_BUTTON_1, false);
-		  boolean db_station2 = SmartDashboard.getBoolean(RobotMap.DB_BUTTON_2, false);
-		  boolean db_station3 = SmartDashboard.getBoolean(RobotMap.DB_BUTTON_3, false);
-
-		  System.out.println("Dashboard values: " + 
-				  " Station1: " + db_station1 +
-				  " Station2: " + db_station2 +
-				  " Station3: " + db_station3);
-		  
-		  if (db_station1) {
-			  m_autonomousCommand = new Station1Command(Robot.AUTONOMOUS_MODE_LENGTH);
-		  }
-		  else if (db_station2) {
-			  m_autonomousCommand = new Station2Command(Robot.AUTONOMOUS_MODE_LENGTH);			  
-		  }
-		  else if (db_station3) {
-			  m_autonomousCommand = new Station3Command(Robot.AUTONOMOUS_MODE_LENGTH);			  
-		  }		 
+//		  boolean db_station1 = SmartDashboard.getBoolean(RobotMap.DB_BUTTON_1, false);
+//		  boolean db_station2 = SmartDashboard.getBoolean(RobotMap.DB_BUTTON_2, false);
+//		  boolean db_station3 = SmartDashboard.getBoolean(RobotMap.DB_BUTTON_3, false);
+//
+//		  System.out.println("Dashboard values: " + 
+//				  " Station1: " + db_station1 +
+//				  " Station2: " + db_station2 +
+//				  " Station3: " + db_station3);
+//		  
+//		  if (db_station1) {
+//			  m_autonomousCommand = new Station1Command(Robot.AUTONOMOUS_MODE_LENGTH);
+//		  }
+//		  else if (db_station2) {
+//			  m_autonomousCommand = new Station2Command(Robot.AUTONOMOUS_MODE_LENGTH);			  
+//		  }
+//		  else if (db_station3) {
+//			  m_autonomousCommand = new Station3Command(Robot.AUTONOMOUS_MODE_LENGTH);			  
+//		  }		 
 
 		// schedule the autonomous command (example)
+		
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
 		}
@@ -138,7 +195,7 @@ public class Robot extends TimedRobot {
 		mecanum.driveCartesian(
 				driveX,
 				driveY, 
-				0,
+				driveZ,
 				0
 		);
 	}
@@ -149,6 +206,8 @@ public class Robot extends TimedRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
+		compressor.setClosedLoopControl(true);
+		
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
@@ -162,11 +221,10 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		mecanum.driveCartesian(
-				m_oi._xboxController.getX(Hand.kLeft)*.5,
-				m_oi._xboxController.getY(Hand.kLeft)*.5, 
-				0,
-				0
-		);
+				m_oi._xboxController.getX(Hand.kLeft)*.90,
+				m_oi._xboxController.getY(Hand.kLeft)*.90, 
+				m_oi._xboxController.getRawAxis(2)*.90
+		); 
 	}
 	
 	/**

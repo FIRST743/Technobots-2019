@@ -3,15 +3,18 @@ package org.usfirst.frc.team743.robot.subsystems;
 import org.usfirst.frc.team743.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  *
  */
 public class ClimbingMechanism extends Subsystem {
-
-	DoubleSolenoid bigPneumatic = new DoubleSolenoid(RobotMap.pneumaticClimberBigUp, RobotMap.pneumaticClimberBigDown);
+	
 	DoubleSolenoid smallPneumatic = new DoubleSolenoid(RobotMap.pneumaticClimberSmallUp, RobotMap.pneumaticClimberSmallDown);
+	
+	private static Talon climbingActuator = new Talon(RobotMap.actuatorClimb);
+	
 	// Put methods for controlling this subsystem
     // here. Call these from Commands.
 
@@ -20,18 +23,10 @@ public class ClimbingMechanism extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     
-    
-    public void extendBigPneumatic() {
-    	bigPneumatic.set(DoubleSolenoid.Value.kForward);
+public static void setClimbingActuator(double speed) {
     	
-    }
-    
-    public void stopBigPneumatic() {
-    	bigPneumatic.set(DoubleSolenoid.Value.kOff);
-    }
-    
-    public void retractBigPneumatic() {
-    	bigPneumatic.set(DoubleSolenoid.Value.kReverse);
+    	climbingActuator.set(speed);
+    	
     }
     
     public void extendSmallPneumatic() {
