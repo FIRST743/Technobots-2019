@@ -7,6 +7,9 @@
 
 package org.usfirst.frc.team743.robot;
 
+import org.usfirst.frc.team743.robot.commands.autonomous.*;
+import org.usfirst.frc.team743.robot.subsystems.*;
+
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
@@ -21,16 +24,8 @@ import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team743.robot.subsystems.DriveSystem;
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
-import org.usfirst.frc.team743.robot.commands.autonomous.DoNothing;
-import org.usfirst.frc.team743.robot.commands.autonomous.LeftSwitch;
-import org.usfirst.frc.team743.robot.commands.autonomous.RightSwitch;
-import org.usfirst.frc.team743.robot.commands.autonomous.GoStraight;
-import org.usfirst.frc.team743.robot.subsystems.Actuators;
-import org.usfirst.frc.team743.robot.subsystems.ClawMechanism;
-import org.usfirst.frc.team743.robot.subsystems.ClimbingMechanism;
 
 
 /**
@@ -52,14 +47,16 @@ public class Robot extends TimedRobot {
 	public static double driveZ ;
 	
 	//Constructors with are instantiating the subsystems
-	public static final Actuators actuators = new Actuators();
-	
 	public static final DriveSystem driveSystem = new DriveSystem();
 	
 	public static final ClawMechanism clawMechanism = new ClawMechanism();
 	
-	public static final ClimbingMechanism climbingMechanism = new ClimbingMechanism();
-
+	public static final ClawClimbMechanism clawClimbMechanism = new ClawClimbMechanism();
+	
+	public static final TiltFront tiltFront = new TiltFront(); 
+			
+	public static final TiltBack tiltBack = new TiltBack(); 
+	
 	public static final MecanumDrive mecanum = new MecanumDrive(
 			driveSystem.topLeftTalon,
 			driveSystem.bottomLeftTalon,

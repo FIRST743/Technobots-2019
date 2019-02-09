@@ -7,20 +7,7 @@
 
 package org.usfirst.frc.team743.robot;
 
-import org.usfirst.frc.team743.robot.commands.CloseClaw;
-import org.usfirst.frc.team743.robot.commands.ExtendBigActuator;
-import org.usfirst.frc.team743.robot.commands.ExtendClimbingActuator;
-import org.usfirst.frc.team743.robot.commands.ExtendSmallActuator;
-import org.usfirst.frc.team743.robot.commands.ExtendSmallPneumatic;
-import org.usfirst.frc.team743.robot.commands.OpenClaw;
-import org.usfirst.frc.team743.robot.commands.PneumaticToggleCommand;
-import org.usfirst.frc.team743.robot.commands.RetractBigActuator;
-import org.usfirst.frc.team743.robot.commands.RetractClimbingActuator;
-import org.usfirst.frc.team743.robot.commands.RetractSmallActuator;
-import org.usfirst.frc.team743.robot.commands.RetractSmallPneumatic;
-import org.usfirst.frc.team743.robot.commands.StopBigActuator;
-import org.usfirst.frc.team743.robot.commands.StopClimbingActuator;
-import org.usfirst.frc.team743.robot.commands.StopSmallActuator;
+import org.usfirst.frc.team743.robot.commands.*;
 
 import edu.wpi.first.wpilibj.XboxController;
 
@@ -69,36 +56,29 @@ public class OI {
 	Button buttonStickRight = new JoystickButton(_xboxController, stickRightButton);
 	
 	public OI(){
-		//Extends the BigActuator when button RT is pressed and stops it when the button is released.
-//		buttonRT.whileHeld(new RetractBigActuator());
-//		buttonRT.whenReleased(new StopBigActuator());
-//		
-//		//Retracts the BigActuator when button LT is pressed and stops it when the button is released.
-//		buttonLT.whileHeld(new ExtendBigActuator());
-//		buttonLT.whenReleased(new StopBigActuator());
 		
-		//Extends the SmallActuator when button RB is pressed and stops it when the button is released.
-		buttonLB.whileHeld(new ExtendSmallActuator());
-		buttonLB.whenReleased(new StopSmallActuator());
+		//  Code Claw Climb	
+		buttonLT.whileHeld(new ClawClimbUp());
+		buttonRT.whileHeld(new ClawClimbDown());
+		buttonLT.whenReleased(new ClawClimbStop());
+		buttonRT.whenReleased(new ClawClimbStop());
 		
-		//Retracts the SmallActuator when button LB is pressed and stops it when the button is released.
-		buttonRB.whileHeld(new RetractSmallActuator());
-		buttonRB.whenReleased(new StopSmallActuator());
+		//  Claw Open and Close
+		buttonLB.whenPressed(new ClawOpen());
+		buttonRB.whenPressed(new ClawClose());
 		
-		//Extends the ClimbingActuator when button "START" is pressed and stops it when the button is released.
-		buttonSELECT.whileHeld(new ExtendClimbingActuator());
-		buttonSELECT.whenReleased(new StopClimbingActuator());
+		// Tilt Front Command
+		buttonY.whileHeld(new TiltFrontUp());
+		buttonX.whileHeld(new TiltFrontDown());
+		buttonY.whenReleased(new TiltFrontStop());
+		buttonX.whenReleased(new TiltFrontStop());
 		
-		
-		buttonSTART.whileHeld(new RetractClimbingActuator());
-		buttonSTART.whenReleased(new StopClimbingActuator());
-		//Retracts the ClimbingActuator when button "SELECT" is pressed and stops it when the button is released.
-		
-		//Button X will act as a "switch" to open and close the claw..
-		buttonX.whenPressed(new PneumaticToggleCommand(new OpenClaw(), new CloseClaw()));
-		
-		//Button Y will act as a "switch to extend and retract the small pneumatic and the push-down pneumatic"
-		buttonY.whileHeld(new PneumaticToggleCommand(new ExtendSmallPneumatic(), new RetractSmallPneumatic()));
+		// Tilt Back commands
+		buttonB.whileHeld(new TiltBackUp());
+		buttonA.whileHeld(new TiltBackDown());
+		buttonB.whenReleased(new TiltBackStop());
+		buttonA.whenReleased(new TiltBackStop());
+	
 		
 	}
 		

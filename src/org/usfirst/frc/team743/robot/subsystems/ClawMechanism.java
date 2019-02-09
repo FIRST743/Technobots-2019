@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class ClawMechanism extends Subsystem {
 
-	DoubleSolenoid clawPneumatics = new DoubleSolenoid(RobotMap.pneumaticClawOpen,RobotMap.pneumaticClawClose);
+	DoubleSolenoid clawPneumatics = new DoubleSolenoid(RobotMap.clawPneumaticOpen,RobotMap.clawPneumaticClose);
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
