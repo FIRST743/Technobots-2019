@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
  */
 public class ClawClimbMechanism extends Subsystem {
 	
-	// TODO: find an appropriate speed 
 	public final double speed = 0.3;
 	
     public static final SpeedControllerGroup speedGroup = new SpeedControllerGroup(

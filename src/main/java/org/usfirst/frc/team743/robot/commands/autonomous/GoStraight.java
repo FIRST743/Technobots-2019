@@ -10,23 +10,17 @@ public class GoStraight extends TimedAutonomous {
 
 	public GoStraight(double timeout) {
 		super(timeout);
-		commandGroup3.addSequential( new MoveY(1.5,-.75));
-//		commandGroup3.addSequential(new MoveY(1.5,-.75));
-		// TODO Auto-generated constructor stub
+		//commandGroup3.addSequential( new MoveY(1.5,-.75));
 	}
 
 	@Override
 	protected void stop_autonomous() {
-		// TODO Auto-generated method stub
 		commandGroup3.cancel();
-
 	}
 
 	@Override
 	protected void start_autonomous() {
-		// TODO Auto-generated method stub
 		commandGroup3.start();
-
 	}
 
 }

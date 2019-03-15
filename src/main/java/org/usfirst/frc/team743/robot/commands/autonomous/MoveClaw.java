@@ -16,13 +16,12 @@ public class MoveClaw extends TimedCommand {
 	}
 
     // Called just before this Command runs the first time
-    @SuppressWarnings("static-access")
 	protected void initialize() {
     	if (this._open) {
-    		//Robot.clawMechanism.openClaw();
+    		Robot.clawMechanism.openClaw();
     	}
     	else {
-    		//Robot.clawMechanism.closeClaw();
+    		Robot.clawMechanism.closeClaw();
     	}
     }
 }
