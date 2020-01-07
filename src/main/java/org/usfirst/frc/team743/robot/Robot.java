@@ -7,8 +7,6 @@
 
 package org.usfirst.frc.team743.robot;
 
-import org.opencv.core.Mat;
-import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team743.robot.commands.autonomous.DoNothing;
 import org.usfirst.frc.team743.robot.commands.autonomous.GoStraight;
 import org.usfirst.frc.team743.robot.subsystems.ClawClimbMechanism;
@@ -16,8 +14,6 @@ import org.usfirst.frc.team743.robot.subsystems.ClawMechanism;
 import org.usfirst.frc.team743.robot.subsystems.TiltBack;
 import org.usfirst.frc.team743.robot.subsystems.TiltFront;
 
-import edu.wpi.cscore.CvSink;
-import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
@@ -40,10 +36,11 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
  */
 public class Robot extends TimedRobot {
 	
-	
-	// TODO:  Enter the time the command will run.
 	private static final int AUTONOMOUS_MODE_LENGTH = 15;
-	
+	public static double driveX = 0.0;
+	public static double driveY = 0.0;
+	public static double driveZ = 0.0;
+
 	// Pneumatics
 	public static final ClawMechanism clawMechanism = new ClawMechanism();
 	public static final TiltFront tiltFront = new TiltFront(); 		
@@ -71,6 +68,42 @@ public class Robot extends TimedRobot {
 	//Instantiating the chooser for the SmartDashboard
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 
+
+	private void checkDriverStationInputs() {
+		boolean db_station1 = SmartDashboard.getBoolean(RobotMap.DB_BUTTON_1, false);
+		boolean db_station2 = SmartDashboard.getBoolean(RobotMap.DB_BUTTON_2, false);
+		boolean db_station3 = SmartDashboard.getBoolean(RobotMap.DB_BUTTON_3, false);
+
+		System.out.println("Dashboard values: " + 
+				" Station1: " + db_station1 +
+				" Station2: " + db_station2 +
+				" Station3: " + db_station3);
+/*
+		if (db_station1) {
+			m_autonomousCommand = new Station1Command(Robot.AUTONOMOUS_MODE_LENGTH);
+		}
+		else if (db_station2) {
+			m_autonomousCommand = new Station2Command(Robot.AUTONOMOUS_MODE_LENGTH);			  
+		}
+		else if (db_station3) {
+			m_autonomousCommand = new Station3Command(Robot.AUTONOMOUS_MODE_LENGTH);			  
+		}
+*/
+	}
+	private void controlledRobotInit() {
+		this.checkDriverStationInputs();
+	}
+	private void controlledRobotPeriodic() {
+		Scheduler.getInstance().run();
+
+		double x = -m_oi._xboxController.getY(Hand.kLeft);
+		double y = -m_oi._xboxController.getY(Hand.kRight);
+
+		double speedAdjust = .75;
+		drive.tankDrive(x* speedAdjust,y*speedAdjust);
+	}
+
+
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -78,37 +111,26 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		m_oi = new OI();
-		
-		//compressor.setClosedLoopControl(true);
-		//new Thread(() -> {
-            UsbCamera camera = CameraServer.getInstance().startAutomaticCapture("Claw", 0);
+
+		try {
+			UsbCamera camera = CameraServer.getInstance().startAutomaticCapture("Claw", 0);
 			camera.setResolution(320, 240);
 			camera.setFPS(15);
-            
-            UsbCamera camera2 = CameraServer.getInstance().startAutomaticCapture("Motion",1);             
-            camera.setResolution(320, 240);
-			camera.setFPS(10);
 			
-            // Mat source = new Mat();
-            // Mat output = new Mat();                                
-            
-            // while(!Thread.interrupted()) {
-            //     cvSink.grabFrame(source);
-            //     Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
-            //     outputStream.putFrame(output);
-            // }
-        //}).start();
-		
-		//Constructing adding options to the smart dashboard.
-//		m_chooser.addObject("Default Auto", new Station1Command(AUTONOMOUS_MODE_LENGTH));
-//		m_chooser.addObject("Middle", new Station2Command(AUTONOMOUS_MODE_LENGTH));
-//		m_chooser.addObject("Right", new Station3Command(AUTONOMOUS_MODE_LENGTH));
-		m_chooser.addDefault("Straight", new GoStraight(AUTONOMOUS_MODE_LENGTH));
-		m_chooser.addObject("Nothing", new DoNothing(AUTONOMOUS_MODE_LENGTH));
+			UsbCamera camera2 = CameraServer.getInstance().startAutomaticCapture("Motion",1);             
+			camera.setResolution(320, 240);
+			camera.setFPS(10);
+		}
+		catch (Exception e) {
+			System.out.println("An error occurred while setting up the cameras");
+			System.out.println(e);
+		}
+		// m_chooser.addDefault("Straight", new GoStraight(AUTONOMOUS_MODE_LENGTH));
+		// m_chooser.addObject("Nothing", new DoNothing(AUTONOMOUS_MODE_LENGTH));
 		
 		SmartDashboard.putData("Auto mode", m_chooser);
 	}
-	
+
 
 	/**
 	 * This function is called once each time the robot enters Disabled mode.
@@ -117,9 +139,12 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
-		
+		System.out.println("disabledInit... Initializing Disabled Mode");
+		this.checkDriverStationInputs();
 	}
-
+	/*
+	 * This occurs periodically while the robot is disabled
+	 */
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
@@ -127,101 +152,56 @@ public class Robot extends TimedRobot {
 	}
 
 	/**
-	 * 
-	 * This autonomous (along with the chooser code above) shows how to select
-	 * between different autonomous modes using the dashboard. The sendable
-	 * chooser code works with the Java SmartDashboard. If you prefer the
-	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-	 * getString code to get the auto name from the text box below the Gyro
-	 *
-	 * <p>You can add additional auto modes by adding additional commands to the
-	 * chooser code above (like the commented example) or additional comparisons
-	 * to the switch structure below with additional strings & commands.
+	 * This function is called when initializing Autonomous mode
 	 */
 	@Override
 	public void autonomousInit() {
-	
-		//compressor.setClosedLoopControl(true);
-	
-		m_autonomousCommand = m_chooser.getSelected();
-/*
-		  boolean db_station1 = SmartDashboard.getBoolean(RobotMap.DB_BUTTON_1, false);
-		  boolean db_station2 = SmartDashboard.getBoolean(RobotMap.DB_BUTTON_2, false);
-		  boolean db_station3 = SmartDashboard.getBoolean(RobotMap.DB_BUTTON_3, false);
+		System.out.println("autonomousInit... Initializing Autonomous Mode");
 
-		  System.out.println("Dashboard values: " + 
-				  " Station1: " + db_station1 +
-				  " Station2: " + db_station2 +
-				  " Station3: " + db_station3);
-		  
-		  if (db_station1) {
-			  m_autonomousCommand = new Station1Command(Robot.AUTONOMOUS_MODE_LENGTH);
-		  }
-		  else if (db_station2) {
-			  m_autonomousCommand = new Station2Command(Robot.AUTONOMOUS_MODE_LENGTH);			  
-		  }
-		  else if (db_station3) {
-			  m_autonomousCommand = new Station3Command(Robot.AUTONOMOUS_MODE_LENGTH);			  
-		  }		 
-*/
-		// schedule the autonomous command (example)
-		
+		m_autonomousCommand = m_chooser.getSelected();
+
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
 		}
 	}
-
 	/**
 	 * This function is called periodically during autonomous.
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		Scheduler.getInstance().run();
+		this.controlledRobotPeriodic();
 	}
 
+
+	/*
+	 * This function is called when initializing TeleOperated mode
+	 */
 	@Override
 	public void teleopInit() {
-		// This makes sure that the autonomous stops running when
-		// teleop starts running. If you want the autonomous to
-		// continue until interrupted by another command, remove
-		// this line or comment it out.
-		compressor.setClosedLoopControl(true);
-		System.out.println("teleopInit... Initializing Operator Mode");
-		if (m_autonomousCommand != null) {
-			m_autonomousCommand.cancel();
-		}
+		System.out.println("teleopInit... Initializing TeleOperator Mode");
+		this.controlledRobotInit();
 	}
-
 	/**
-	 * This function is called periodically during operator control.
+	 * This get called perioidically during TeleOperated mode
 	 */
 	@Override
 	public void teleopPeriodic() {
-		Scheduler.getInstance().run();
-		
-		double x = -m_oi._xboxController.getY(Hand.kLeft);
-		double y = -m_oi._xboxController.getY(Hand.kRight);
-
-
-		double speedAdjust = .75;
-		drive.tankDrive(x* speedAdjust,y*speedAdjust);
-
-		//System.out.println("(" + x + ", " + y + ")");
-
-		// mecanum.driveCartesian(
-		// 		m_oi._xboxController.getX(Hand.kLeft)*.90,
-		//  		m_oi._xboxController.getY(Hand.kLeft)*.90, 
-		//  		m_oi._xboxController.getRawAxis(2)*.90
-		// ); 
+		this.controlledRobotPeriodic();
 	}
 	
+	/*
+	 * This function is called when initializing Test mode
+	 */
+	@Override
+	public void testInit() {
+		System.out.println("testInit... Initializing Test Mode");
+		this.controlledRobotInit();	
+	}
 	/**
-	 * This function is called periodically during test mode.
+	 * This function is called periodically during Test mode
 	 */
 	@Override
 	public void testPeriodic() {
+		this.controlledRobotPeriodic();
 	}
-
-
-	
 }

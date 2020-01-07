@@ -22,17 +22,17 @@ public class MoveX extends TimedCommand {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	// Robot.driveX = this._speed;
+    	Robot.driveX = this._speed;
     }
 
     // Called once after timeout
     protected void end() {
-    	// Robot.driveX = 0;
+    	Robot.driveX = 0;
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	// Robot.driveX = 0;
+    	Robot.driveX = 0;
     }
 }

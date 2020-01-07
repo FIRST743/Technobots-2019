@@ -11,8 +11,6 @@ public class LeftSwitch extends TimedAutonomous {
 	
 	public LeftSwitch(double timeout) {
 		super(timeout);
-		// TODO Auto-generated constructor stub
-		
 //		groupCommand1.addSequential(new MoveClaw(.25, false));
 //		groupCommand1.addSequential(new MoveY(1, -.25));
 //		groupCommand1.addSequential(new MoveClaw(0, true));
@@ -23,24 +21,16 @@ public class LeftSwitch extends TimedAutonomous {
 //		groupCommand1.addSequential(new MoveClaw(1, false));
 //		groupCommand1.addSequential(new MoveBigActuator(2, 1));
 //		groupCommand1.addSequential(new MoveBigActuator(2, -1));
-		
 	}
 
 	@Override
 	protected void stop_autonomous() {
-		// TODO Auto-generated method stub
-
-		groupCommand1.cancel();
-		
+		groupCommand1.cancel();		
 	}
 
 	@Override
 	protected void start_autonomous() {
-		
 		groupCommand1.start();
-		
-		// TODO Auto-generated method stub
-
 	}
 
 }
